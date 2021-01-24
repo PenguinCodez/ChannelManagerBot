@@ -21,6 +21,8 @@ client.help_command = MyNewHelp()
 async def on_ready():
     change_status.start()
     print('i am a channel bot.')
+    for guild in client.guilds:
+        print(guild.name)
 
 @client.command(aliases=['n'], description='Change the name of a text channel.')
 @commands.has_permissions(manage_channels=True)
@@ -100,6 +102,11 @@ async def rolehide(self, ctx, role : discord.Role, channel : discord.TextChannel
     perms = channel
     await channel.set_permissions(role, read_messages=False)
     await ctx.send(f'Channel {channel} hidden for {role.name}.')
+
+@client.command(aliases=['inv'])
+async def invite(ctx):
+    embo = discord.Embed(title='Invite Link', description='You can invite me [here](https://discord.com/api/oauth2/authorize?client_id=801697562620723220&permissions=268435472&scope=bot) if mobile and [here](https://dsc.gg/channelmanager) if desktop.')
+    await ctx.send(embed=embo)
 
 @tasks.loop(seconds=10)
 async def change_status():
